@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,10 +12,6 @@ import {
   Footer,
   Name,
   Price,
-  QuantityContainer,
-  QuantityButton,
-  QuantityValue,
-  AddToCartContainer,
 } from './product-card.styles';
 
 const ProductCard = ({ product, category }) => {
@@ -25,19 +20,6 @@ const ProductCard = ({ product, category }) => {
   const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
   const currentUser = useSelector(selectCurrentUser);
-  const [quantity, setQuantity] = useState(1);
-
-  const incrementQuantity = (e) => {
-    e.stopPropagation();
-    setQuantity(quantity + 1);
-  };
-
-  const decrementQuantity = (e) => {
-    e.stopPropagation();
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
 
   const addProductToCart = (e) => {
     e.stopPropagation();
@@ -45,8 +27,7 @@ const ProductCard = ({ product, category }) => {
       navigate('/auth');
       return;
     }
-    dispatch(addItemToCart(cartItems, product, quantity));
-    setQuantity(1);
+    dispatch(addItemToCart(cartItems, product));
   };
 
   const goToProductDetail = () => {
@@ -60,19 +41,12 @@ const ProductCard = ({ product, category }) => {
         <Name>{name}</Name>
         <Price>${price}</Price>
       </Footer>
-      <AddToCartContainer onClick={(e) => e.stopPropagation()}>
-        <QuantityContainer>
-          <QuantityButton onClick={decrementQuantity}>-</QuantityButton>
-          <QuantityValue>{quantity}</QuantityValue>
-          <QuantityButton onClick={incrementQuantity}>+</QuantityButton>
-        </QuantityContainer>
-        <Button
-          buttonType={BUTTON_TYPE_CLASSES.inverted}
-          onClick={addProductToCart}
-        >
-          Add to Cart
-        </Button>
-      </AddToCartContainer>
+      <Button
+        buttonType={BUTTON_TYPE_CLASSES.inverted}
+        onClick={addProductToCart}
+      >
+        Add to Cart
+      </Button>
     </ProductCartContainer>
   );
 };
