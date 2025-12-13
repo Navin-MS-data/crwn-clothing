@@ -16,6 +16,7 @@ import {
   NavLinks,
   NavLink,
   LogoContainer,
+  UserGreeting,
 } from './navigation.styles';
 
 const Navigation = () => {
@@ -24,6 +25,11 @@ const Navigation = () => {
   const isCartOpen = useSelector(selectIsCartOpen);
 
   const signOutUser = () => dispatch(signOutStart());
+
+  const getFirstName = (displayName) => {
+    if (!displayName) return 'User';
+    return displayName.split(' ')[0];
+  };
 
   return (
     <Fragment>
@@ -35,9 +41,15 @@ const Navigation = () => {
           <NavLink to='/shop'>SHOP</NavLink>
 
           {currentUser ? (
-            <NavLink as='span' onClick={signOutUser}>
-              SIGN OUT
-            </NavLink>
+            <>
+              <UserGreeting>
+                Hello, {getFirstName(currentUser.displayName)}!
+              </UserGreeting>
+              <NavLink to='/profile'>PROFILE</NavLink>
+              <NavLink as='span' onClick={signOutUser}>
+                SIGN OUT
+              </NavLink>
+            </>
           ) : (
             <NavLink to='/auth'>SIGN IN</NavLink>
           )}

@@ -27,3 +27,9 @@ export const NavLink = styled(Link)`
   padding: 10px 15px;
   cursor: pointer;
 `;
+
+export const UserGreeting = styled.span`
+  padding: 10px 15px;
+  font-weight: bold;
+  color: #333;
+`;
