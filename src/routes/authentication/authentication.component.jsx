@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import SignUpForm from '../../components/sign-up-form/sign-up-form.component';
 import SignInForm from '../../components/sign-in-form/sign-in-form.component';
+
+import { selectCurrentUser } from '../../store/user/user.selector';
 
 import {
   AuthenticationContainer,
@@ -11,6 +15,14 @@ import {
 
 const Authentication = () => {
   const [showSignUp, setShowSignUp] = useState(false);
+  const currentUser = useSelector(selectCurrentUser);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate('/profile');
+    }
+  }, [currentUser, navigate]);
 
   const toggleForm = () => {
     setShowSignUp(!showSignUp);
