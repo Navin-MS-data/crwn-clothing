@@ -1,7 +1,7 @@
 import { CART_ACTION_TYPES } from './cart.types';
 import { createAction } from '../../utils/firebase/reducer/reducer.utils';
 
-const addCartItem = (cartItems, productToAdd) => {
+const addCartItem = (cartItems, productToAdd, quantityToAdd = 1) => {
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.id === productToAdd.id,
   );
@@ -9,12 +9,12 @@ const addCartItem = (cartItems, productToAdd) => {
   if (existingCartItem) {
     return cartItems.map((cartItem) =>
       cartItem.id === productToAdd.id
-        ? { ...cartItem, quantity: cartItem.quantity + 1 }
+        ? { ...cartItem, quantity: cartItem.quantity + quantityToAdd }
         : cartItem,
     );
   }
 
-  return [...cartItems, { ...productToAdd, quantity: 1 }];
+  return [...cartItems, { ...productToAdd, quantity: quantityToAdd }];
 };
 
 const removeCartItem = (cartItems, cartItemToRemove) => {
@@ -42,8 +42,8 @@ const clearCartItem = (cartItems, cartItemToClear) =>
 export const setIsCartOpen = (boolean) =>
   createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, boolean);
 
-export const addItemToCart = (cartItems, productToAdd) => {
-  const newCartItems = addCartItem(cartItems, productToAdd);
+export const addItemToCart = (cartItems, productToAdd, quantity = 1) => {
+  const newCartItems = addCartItem(cartItems, productToAdd, quantity);
   return createAction(CART_ACTION_TYPES.SET_CART_ITEMS, newCartItems);
 };
 
