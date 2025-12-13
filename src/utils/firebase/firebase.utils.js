@@ -8,6 +8,8 @@ import {
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
+  setPersistence,
+  browserSessionPersistence,
 } from 'firebase/auth';
 import {
   getFirestore,
@@ -43,6 +45,10 @@ googleProvider.setCustomParameters({
 });
 
 export const auth = getAuth();
+
+// Set session persistence - user will be signed out when browser is closed
+setPersistence(auth, browserSessionPersistence);
+
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
 export const signInWithGoogleRedirect = () =>
