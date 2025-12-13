@@ -16,8 +16,6 @@ import {
   NavLinks,
   NavLink,
   LogoContainer,
-  UserGreeting,
-  LeftContainer,
 } from './navigation.styles';
 
 const Navigation = () => {
@@ -27,24 +25,12 @@ const Navigation = () => {
 
   const signOutUser = () => dispatch(signOutStart());
 
-  const getFirstName = (displayName) => {
-    if (!displayName) return 'User';
-    return displayName.split(' ')[0];
-  };
-
   return (
     <Fragment>
       <NavigationContainer>
-        <LeftContainer>
-          <LogoContainer to='/'>
-            <CrwnLogo className='logo' />
-          </LogoContainer>
-          {currentUser && (
-            <UserGreeting>
-              Hello, {getFirstName(currentUser.displayName)}!
-            </UserGreeting>
-          )}
-        </LeftContainer>
+        <LogoContainer to='/'>
+          <CrwnLogo className='logo' />
+        </LogoContainer>
         <NavLinks>
           <NavLink to='/shop'>SHOP</NavLink>
 

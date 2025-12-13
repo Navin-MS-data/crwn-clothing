@@ -9,11 +9,6 @@ export const NavigationContainer = styled.div`
   margin-bottom: 25px;
 `;
 
-export const LeftContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
 export const LogoContainer = styled(Link)`
   height: 100%;
   width: 70px;
@@ -31,14 +26,4 @@ export const NavLinks = styled.div`
 export const NavLink = styled(Link)`
   padding: 10px 15px;
   cursor: pointer;
-`;
-
-export const UserGreeting = styled.span`
-  display: flex;
-  align-items: center;
-  height: 100%;
-  margin-left: 20px;
-  padding: 10px 15px;
-  font-weight: bold;
-  color: #333;
 `;
