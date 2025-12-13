@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import { selectCartItems } from '../../store/cart/cart.selector';
+import { selectCurrentUser } from '../../store/user/user.selector';
 import { addItemToCart } from '../../store/cart/cart.action';
 
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
@@ -18,9 +19,14 @@ const ProductCard = ({ product, category }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
+  const currentUser = useSelector(selectCurrentUser);
 
   const addProductToCart = (e) => {
     e.stopPropagation();
+    if (!currentUser) {
+      navigate('/auth');
+      return;
+    }
     dispatch(addItemToCart(cartItems, product));
   };
 
