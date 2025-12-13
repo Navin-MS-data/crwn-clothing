@@ -34,6 +34,10 @@ export const NavLink = styled(Link)`
 `;
 
 export const UserGreeting = styled.span`
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-left: 20px;
   padding: 10px 15px;
   font-weight: bold;
   color: #333;
