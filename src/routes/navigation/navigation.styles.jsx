@@ -9,6 +9,11 @@ export const NavigationContainer = styled.div`
   margin-bottom: 25px;
 `;
 
+export const LeftContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 export const LogoContainer = styled(Link)`
   height: 100%;
   width: 70px;
