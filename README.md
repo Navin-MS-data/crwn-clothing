@@ -1,39 +1,96 @@
-# How to fork and clone
+# CRWN Clothing
 
-One quick note about cloning this project. If you wish to make commits and push your own code, you'll need to fork the project first. Forking allows you to have your own copy of this repository by adding a duplicate version in your own profile!
+A modern e-commerce application built with React, Redux, and Firebase.
 
-You can see the fork button in the top right corner of every GitHub project; click it and a copy of the project will be added to your GitHub profile under the same name as the original project.
+## Features
 
-<img width="612" alt="github fork" src="https://user-images.githubusercontent.com/10578605/157998981-4bfd1f83-825c-4664-b22d-b2c7d471dc70.png">
+- User authentication (Sign up, Sign in, Google Sign in)
+- Product browsing by categories
+- Shopping cart functionality
+- Stripe payment integration
+- Order success confirmation
 
-After forking the project, simply clone it the way you would from the new forked project in your own GitHub repository and you can commit and push to it freely!
+## Tech Stack
 
-# After you fork and clone:
+- React
+- Redux (with Redux Saga)
+- Firebase (Authentication & Firestore)
+- Stripe Payment Gateway
+- Styled Components
+- Netlify Functions (Serverless)
 
-## Install dependencies
+## Getting Started
 
-In your terminal after you clone your project down, remember to run either `yarn` or `npm install` to build all the dependencies in the project.
+### Prerequisites
 
-## Set your firebase config
+- Node.js (v14 or higher)
+- npm or yarn
+- Firebase account
+- Stripe account
 
-Remember to replace the config variable in your firebase.utils.js with your own config object from the firebase dashboard! Navigate to the project settings gear icon > project settings and scroll down to the config code. Copy the object in the code and replace the variable in your cloned code.
+### Installation
 
-<img width="1261" alt="Screen Shot 2022-03-11 at 8 51 22 PM" src="https://user-images.githubusercontent.com/10578605/157999158-10e921cc-9ee5-46f6-a0c5-1ae5686f54f3.png">
-
-# Branching strategy
-
-After forking this repository and cloning it down, you will have access to all the lesson branches with code at different checkpoints throughout the course. If for some reason you need to work from the codebase at one of these lesson branch checkpoints, follow these steps:
-
-1. Checkout to the lesson-# (let's use lesson-15 as an example) branch
+1. Clone the repository
 
 ```
-git checkout lesson-15
+git clone https://github.com/Navin-MS-data/crwn-clothing.git
+cd crwn-clothing
 ```
 
-2. Branch off from lesson-15. This will create a new branch where the code of lesson-15 is the basis for your new branch. You can name your new branch whatever you want! Let's say we use my-main-branch as the name.
+2. Install dependencies
 
 ```
-git checkout -b my-main-branch
+npm install
 ```
 
-3. Now you can just code on this branch, push code from this branch up to your forked repo etc. The main thing to remember is that you want to be on this branch for your own code, so remember what you named this branch!
+3. Set up environment variables
+
+Create a `.env` file in the root directory and add your keys:
+
+```
+REACT_APP_STRIPE_PUBLISHABLE_KEY=pk_test_your_publishable_key_here
+STRIPE_SECRET_KEY=sk_test_your_secret_key_here
+```
+
+4. Set your Firebase config
+
+Replace the config variable in `src/utils/firebase/firebase.utils.js` with your own config object from the Firebase dashboard.
+
+### Running the App
+
+For development with Stripe payment (using Netlify Functions):
+
+```
+npm run dev
+```
+
+For development without payment functionality:
+
+```
+npm start
+```
+
+### Building for Production
+
+```
+npm run build
+```
+
+## Test Card Details (Stripe)
+
+| Card Number          | Description        |
+|----------------------|--------------------|
+| 4242 4242 4242 4242  | Successful payment |
+| 4000 0000 0000 0002  | Card declined      |
+
+- Expiry: Any future date
+- CVC: Any 3 digits
+- ZIP: Any 5 digits
+
+## Deployment
+
+This project is configured for deployment on Netlify. The `netlify.toml` file includes the necessary configuration for serverless functions.
+
+## License
+
+This project is open source and available under the MIT License.
