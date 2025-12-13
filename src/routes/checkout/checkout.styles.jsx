@@ -35,7 +35,8 @@ export const CheckoutHeader = styled.div`
   }
 
   @media screen and (max-width: 480px) {
-    display: none;
+    padding: 6px 0;
+    font-size: 12px;
   }
 `;
 
