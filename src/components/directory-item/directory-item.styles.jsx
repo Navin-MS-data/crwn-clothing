@@ -26,11 +26,33 @@ export const Body = styled.div`
     font-size: 22px;
     color: #4a4a4a;
     text-transform: uppercase;
+
+    @media screen and (max-width: 768px) {
+      font-size: 18px;
+    }
+
+    @media screen and (max-width: 480px) {
+      font-size: 16px;
+    }
   }
 
   p {
     font-weight: lighter;
     font-size: 16px;
+
+    @media screen and (max-width: 480px) {
+      font-size: 14px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    height: 80px;
+    padding: 0 20px;
+  }
+
+  @media screen and (max-width: 480px) {
+    height: 70px;
+    padding: 0 15px;
   }
 `;
 
@@ -64,5 +86,24 @@ export const DirectoryItemContainer = styled.div`
     ${Body} {
       opacity: 0.9;
     }
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 200px;
+    margin: 0 0 15px 0;
+
+    &:first-child {
+      margin-right: 0;
+    }
+
+    &:last-child {
+      margin-left: 0;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    height: 180px;
+    margin: 0 0 10px 0;
   }
 `;

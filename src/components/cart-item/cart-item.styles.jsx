@@ -9,6 +9,16 @@ export const CartItemContainer = styled.div`
   img {
     width: 30%;
   }
+
+  @media screen and (max-width: 768px) {
+    height: 70px;
+    margin-bottom: 12px;
+  }
+
+  @media screen and (max-width: 480px) {
+    height: 60px;
+    margin-bottom: 10px;
+  }
 `;
 
 export const ItemDetails = styled.div`
@@ -21,5 +31,21 @@ export const ItemDetails = styled.div`
 
   span {
     font-size: 16px;
+  }
+
+  @media screen and (max-width: 768px) {
+    padding: 8px 15px;
+
+    span {
+      font-size: 14px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    padding: 5px 10px;
+
+    span {
+      font-size: 12px;
+    }
   }
 `;
