@@ -6,7 +6,6 @@ import { selectCurrentUser } from '../../store/user/user.selector';
 import { addItemToCart } from '../../store/cart/cart.action';
 
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
-import StarRating from '../star-rating/star-rating.component';
 
 import {
   ProductCartContainer,
@@ -16,7 +15,7 @@ import {
 } from './product-card.styles';
 
 const ProductCard = ({ product, category }) => {
-  const { id, name, price, imageUrl, rating, reviewCount } = product;
+  const { id, name, price, imageUrl } = product;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const cartItems = useSelector(selectCartItems);
@@ -42,7 +41,6 @@ const ProductCard = ({ product, category }) => {
         <Name>{name}</Name>
         <Price>${price}</Price>
       </Footer>
-      <StarRating rating={rating} reviewCount={reviewCount} />
       <Button
         buttonType={BUTTON_TYPE_CLASSES.inverted}
         onClick={addProductToCart}
