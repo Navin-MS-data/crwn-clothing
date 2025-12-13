@@ -55,21 +55,16 @@ const PaymentForm = () => {
     setPaymentStatus(null);
 
     try {
-      const response = await fetch(
-        '/.netlify/functions/create-payment-intent',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ amount: cartTotal * 100 }),
+      const response = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
         },
-      );
+        body: JSON.stringify({ amount: cartTotal * 100 }),
+      });
 
       if (!response.ok) {
-        throw new Error(
-          'Network response was not ok. Make sure you are running "npm run dev" instead of "npm start".',
-        );
+        throw new Error('Payment service error. Please try again later.');
       }
 
       const data = await response.json();
