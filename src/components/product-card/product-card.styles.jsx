@@ -57,16 +57,29 @@ export const ProductCartContainer = styled.div`
     height: 250px;
 
     button {
-      top: 170px;
+      top: 10px;
       width: 90%;
       font-size: 10px;
       padding: 0 10px;
-      height: 40px;
-      line-height: 40px;
+      height: 35px;
+      line-height: 35px;
+      display: flex;
+      opacity: 0.9;
+      background-color: rgba(0, 0, 0, 0.8);
+      color: white;
+      z-index: 1;
     }
 
     img {
       height: 85%;
+    }
+
+    &:hover {
+      button {
+        background-color: white;
+        color: black;
+        border: 1px solid black;
+      }
     }
   }
 `;
