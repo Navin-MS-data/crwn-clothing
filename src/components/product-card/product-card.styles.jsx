@@ -46,6 +46,15 @@ export const ProductCartContainer = styled.div`
       font-size: 12px;
       padding: 0 20px;
       min-width: unset;
+      background-color: black;
+      color: white;
+      border: none;
+
+      &:hover {
+        background-color: white;
+        color: black;
+        border: 1px solid black;
+      }
     }
 
     img {
@@ -67,6 +76,15 @@ export const ProductCartContainer = styled.div`
       display: flex;
       opacity: 1;
       margin-top: 5px;
+      background-color: black;
+      color: white;
+      border: none;
+
+      &:hover {
+        background-color: white;
+        color: black;
+        border: 1px solid black;
+      }
     }
 
     img {
