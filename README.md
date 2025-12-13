@@ -17,14 +17,14 @@ A modern e-commerce application built with React, Redux, and Firebase.
 - Firebase (Authentication & Firestore)
 - Stripe Payment Gateway
 - Styled Components
-- Netlify Functions (Serverless)
+- Vercel (Serverless Functions)
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn
+- Node.js (v20 or higher)
+- npm
 - Firebase account
 - Stripe account
 
@@ -58,14 +58,6 @@ Replace the config variable in `src/utils/firebase/firebase.utils.js` with your 
 
 ### Running the App
 
-For development with Stripe payment (using Netlify Functions):
-
-```
-npm run dev
-```
-
-For development without payment functionality:
-
 ```
 npm start
 ```
@@ -89,7 +81,14 @@ npm run build
 
 ## Deployment
 
-This project is configured for deployment on Netlify. The `netlify.toml` file includes the necessary configuration for serverless functions.
+This project is configured for deployment on Vercel. The `api/` folder contains serverless functions for Stripe payment processing.
+
+### Environment Variables on Vercel
+
+Add these environment variables in your Vercel project settings:
+
+- `REACT_APP_STRIPE_PUBLISHABLE_KEY` - Your Stripe publishable key
+- `STRIPE_SECRET_KEY` - Your Stripe secret key
 
 ## License
 
