@@ -54,32 +54,23 @@ export const ProductCartContainer = styled.div`
   }
 
   @media screen and (max-width: 480px) {
-    height: 250px;
+    height: 280px;
 
     button {
-      top: 10px;
-      width: 90%;
+      position: relative;
+      top: auto;
+      width: 100%;
       font-size: 10px;
       padding: 0 10px;
       height: 35px;
       line-height: 35px;
       display: flex;
-      opacity: 0.9;
-      background-color: rgba(0, 0, 0, 0.8);
-      color: white;
-      z-index: 1;
+      opacity: 1;
+      margin-top: 5px;
     }
 
     img {
-      height: 85%;
-    }
-
-    &:hover {
-      button {
-        background-color: white;
-        color: black;
-        border: 1px solid black;
-      }
+      height: 75%;
     }
   }
 `;
