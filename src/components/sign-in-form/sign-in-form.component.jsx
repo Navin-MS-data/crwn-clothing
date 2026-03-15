@@ -1,49 +1,59 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import FormInput from '../form-input/form-input.component';
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
-import { SignInContainer, ButtonsContainer } from './sign-in-form.styles';
+import { SignInContainer, ButtonsContainer, ErrorMessage } from './sign-in-form.styles';
 import {
   googleSignInStart,
   emailSignInStart,
 } from '../../store/user/user.action';
+import { selectUserError } from '../../store/user/user.selector';
 
 const defaultFormFields = {
   email: '',
   password: '',
 };
 
+const getErrorMessage = (error) => {
+  if (!error) return null;
+  switch (error.code) {
+    case 'auth/user-not-found':
+    case 'auth/invalid-credential':
+      return 'No account found with this email.';
+    case 'auth/wrong-password':
+      return 'Incorrect password. Please try again.';
+    case 'auth/too-many-requests':
+      return 'Too many attempts. Please try again later.';
+    case 'auth/invalid-email':
+      return 'Please enter a valid email address.';
+    default:
+      return 'Sign in failed. Please check your credentials.';
+  }
+};
+
 const SignInForm = () => {
   const dispatch = useDispatch();
+  const userError = useSelector(selectUserError);
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
-  const resetFormFields = () => {
-    setFormFields(defaultFormFields);
-  };
-
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = () => {
     dispatch(googleSignInStart());
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    try {
-      dispatch(emailSignInStart(email, password));
-      resetFormFields();
-    } catch (error) {
-      console.log('user sign in failed', error);
-    }
+    dispatch(emailSignInStart(email, password));
   };
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-
     setFormFields({ ...formFields, [name]: value });
   };
+
+  const errorMessage = getErrorMessage(userError);
 
   return (
     <SignInContainer>
@@ -67,6 +77,9 @@ const SignInForm = () => {
           name='password'
           value={password}
         />
+
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
+
         <ButtonsContainer>
           <Button type='submit'>Sign In</Button>
           <Button

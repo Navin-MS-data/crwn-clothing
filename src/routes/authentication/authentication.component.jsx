@@ -20,7 +20,7 @@ const Authentication = () => {
 
   useEffect(() => {
     if (currentUser) {
-      navigate('/profile');
+      navigate('/');
     }
   }, [currentUser, navigate]);
 

@@ -32,3 +32,9 @@ export const ButtonsContainer = styled.div`
     width: 100%;
   }
 `;
+
+export const ErrorMessage = styled.p`
+  color: #cc0000;
+  font-size: 14px;
+  margin: 8px 0 4px;
+`;

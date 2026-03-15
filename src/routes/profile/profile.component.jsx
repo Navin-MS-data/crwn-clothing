@@ -31,7 +31,7 @@ const Profile = () => {
 
   useEffect(() => {
     if (!currentUser) {
-      navigate('/auth');
+      navigate('/');
     }
   }, [currentUser, navigate]);
 
@@ -55,7 +55,6 @@ const Profile = () => {
 
   const signOutUser = () => {
     dispatch(signOutStart());
-    navigate('/');
   };
 
   return (
