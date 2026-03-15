@@ -37,14 +37,17 @@ const Profile = () => {
 
   if (!currentUser) return null;
 
-  const { displayName, email, metadata } = currentUser;
+  const { displayName, email, createdAt } = currentUser;
 
-  const initials = displayName
-    ? displayName.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)
+  const name = displayName && displayName.trim() ? displayName.trim() : null;
+
+  const initials = name
+    ? name.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)
     : email[0].toUpperCase();
 
-  const memberSince = metadata?.creationTime
-    ? new Date(metadata.creationTime).toLocaleDateString('en-US', {
+  // createdAt is a Firestore Timestamp with a toDate() method
+  const memberSince = createdAt?.toDate
+    ? createdAt.toDate().toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
       })
@@ -61,7 +64,7 @@ const Profile = () => {
         <AvatarInitials>{initials}</AvatarInitials>
       </AvatarCircle>
 
-      <DisplayName>{displayName || 'Welcome!'}</DisplayName>
+      <DisplayName>{name || email.split('@')[0]}</DisplayName>
       <EmailText>{email}</EmailText>
       {memberSince && <MemberSince>Member since {memberSince}</MemberSince>}
 
@@ -70,7 +73,7 @@ const Profile = () => {
       <InfoCard>
         <InfoRow>
           <InfoLabel>Name</InfoLabel>
-          <InfoValue>{displayName || '—'}</InfoValue>
+          <InfoValue>{name || '—'}</InfoValue>
         </InfoRow>
         <InfoRow>
           <InfoLabel>Email</InfoLabel>
