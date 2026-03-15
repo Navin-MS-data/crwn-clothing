@@ -1,17 +1,17 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const BaseButton = styled.button`
-  min-width: 165px;
+  min-width: 130px;
   width: auto;
   height: 50px;
   letter-spacing: 0.5px;
   line-height: 50px;
-  padding: 0 35px 0 35px;
-  font-size: 15px;
+  padding: 0 20px 0 20px;
+  font-size: 14px;
   background-color: black;
   color: white;
   text-transform: uppercase;
-  font-family: 'Open Sans Condensed';
+  font-family: "Space Grotesk", sans-serif;
   font-weight: bolder;
   border: none;
   cursor: pointer;
@@ -25,18 +25,18 @@ export const BaseButton = styled.button`
   }
 
   @media screen and (max-width: 768px) {
-    min-width: 140px;
+    min-width: 120px;
     height: 45px;
     line-height: 45px;
-    padding: 0 25px;
-    font-size: 14px;
+    padding: 0 16px;
+    font-size: 13px;
   }
 
   @media screen and (max-width: 480px) {
-    min-width: 120px;
+    min-width: 100px;
     height: 40px;
     line-height: 40px;
-    padding: 0 20px;
+    padding: 0 14px;
     font-size: 12px;
   }
 `;

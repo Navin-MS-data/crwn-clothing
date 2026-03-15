@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const SignInContainer = styled.div`
   display: flex;
@@ -25,14 +25,10 @@ export const SignInContainer = styled.div`
 
 export const ButtonsContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 12px;
 
-  @media screen and (max-width: 480px) {
-    flex-direction: column;
-    gap: 15px;
-
-    button {
-      width: 100%;
-    }
+  button {
+    width: 100%;
   }
 `;

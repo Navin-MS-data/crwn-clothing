@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 
 import {
@@ -7,6 +8,8 @@ import {
   selectCartItems,
 } from '../../store/cart/cart.selector';
 import { selectCurrentUser } from '../../store/user/user.selector';
+import { CART_ACTION_TYPES } from '../../store/cart/cart.types';
+import { createAction } from '../../utils/firebase/reducer/reducer.utils';
 
 import Button, { BUTTON_TYPE_CLASSES } from '../button/button.component';
 
@@ -14,37 +17,28 @@ import {
   PaymentFormContainer,
   FormContainer,
   PaymentMessage,
-  SuccessContainer,
-  SuccessIcon,
-  SuccessTitle,
-  SuccessDetails,
-  OrderNumber,
 } from './payment-form.styles';
 
 const PaymentForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartTotal = useSelector(selectCartTotal);
   const cartItems = useSelector(selectCartItems);
   const currentUser = useSelector(selectCurrentUser);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [paymentStatus, setPaymentStatus] = useState(null);
-  const [orderDetails, setOrderDetails] = useState(null);
+  const [paymentFailed, setPaymentFailed] = useState(false);
 
-  const generateOrderNumber = () => {
-    return (
-      'ORD-' +
-      Date.now().toString(36).toUpperCase() +
-      Math.random().toString(36).substring(2, 7).toUpperCase()
-    );
-  };
+  const generateOrderNumber = () =>
+    'ORD-' +
+    Date.now().toString(36).toUpperCase() +
+    Math.random().toString(36).substring(2, 7).toUpperCase();
 
   const handlePayment = async (e) => {
     e.preventDefault();
 
-    if (!stripe || !elements) {
-      return;
-    }
+    if (!stripe || !elements) return;
 
     if (cartTotal === 0) {
       alert('Your cart is empty. Please add items before checkout.');
@@ -52,14 +46,12 @@ const PaymentForm = () => {
     }
 
     setIsProcessing(true);
-    setPaymentStatus(null);
+    setPaymentFailed(false);
 
     try {
       const response = await fetch('/api/create-payment-intent', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ amount: cartTotal * 100 }),
       });
 
@@ -82,31 +74,28 @@ const PaymentForm = () => {
       setIsProcessing(false);
 
       if (paymentResult.error) {
-        setPaymentStatus('failed');
+        setPaymentFailed(true);
         alert(`Payment failed: ${paymentResult.error.message}`);
-      } else {
-        if (paymentResult.paymentIntent.status === 'succeeded') {
-          setPaymentStatus('success');
-          setOrderDetails({
-            orderNumber: generateOrderNumber(),
-            amount: cartTotal,
-            itemCount: cartItems.reduce(
-              (total, item) => total + item.quantity,
-              0,
-            ),
-            email: currentUser?.email || 'guest@example.com',
-            date: new Date().toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric',
-            }),
-          });
-        }
+      } else if (paymentResult.paymentIntent.status === 'succeeded') {
+        const orderDetails = {
+          orderNumber: generateOrderNumber(),
+          amount: cartTotal,
+          itemCount: cartItems.reduce((total, item) => total + item.quantity, 0),
+          email: currentUser?.email || 'guest@example.com',
+          date: new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          }),
+        };
+
+        dispatch(createAction(CART_ACTION_TYPES.SET_CART_ITEMS, []));
+        navigate('/order-confirmation', { state: { orderDetails } });
       }
     } catch (error) {
       console.error('Payment error:', error);
       setIsProcessing(false);
-      setPaymentStatus('failed');
+      setPaymentFailed(true);
       alert(
         error.message ||
           'There was an error processing your payment. Please try again.',
@@ -114,41 +103,11 @@ const PaymentForm = () => {
     }
   };
 
-  if (paymentStatus === 'success' && orderDetails) {
-    return (
-      <PaymentFormContainer>
-        <SuccessContainer>
-          <SuccessIcon>✓</SuccessIcon>
-          <SuccessTitle>Order Successful!</SuccessTitle>
-          <OrderNumber>Order #{orderDetails.orderNumber}</OrderNumber>
-          <SuccessDetails>
-            <p>Thank you for your purchase!</p>
-            <p>
-              <strong>Amount Paid:</strong> ${orderDetails.amount.toFixed(2)}
-            </p>
-            <p>
-              <strong>Items:</strong> {orderDetails.itemCount}
-            </p>
-            <p>
-              <strong>Date:</strong> {orderDetails.date}
-            </p>
-            <p>
-              <strong>Confirmation sent to:</strong> {orderDetails.email}
-            </p>
-          </SuccessDetails>
-          <p style={{ marginTop: '20px', color: '#666' }}>
-            A confirmation email has been sent to your email address.
-          </p>
-        </SuccessContainer>
-      </PaymentFormContainer>
-    );
-  }
-
   return (
     <PaymentFormContainer>
       <FormContainer onSubmit={handlePayment}>
         <h2>Credit Card Payment</h2>
-        {paymentStatus === 'failed' && (
+        {paymentFailed && (
           <PaymentMessage>Payment failed. Please try again.</PaymentMessage>
         )}
         <CardElement />
